@@ -2,18 +2,25 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 import logging
 
-# Stream Logger Setup
-logger = logging.getLogger("TextEditor")
+# File handler and stream handler setup
+logger = logging.getLogger("Text_Editor_Logger")
 logger.setLevel(logging.DEBUG)
 
-stream_handler = logging.StreamHandler()
-stream_handler.setLevel(logging.DEBUG)
+if logger.hasHandlers():
+    logger.handlers.clear()
 
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.DEBUG)  
 stream_handler.setFormatter(formatter)
 
-if not logger.hasHandlers():
-    logger.addHandler(stream_handler)
+file_handler = logging.FileHandler("Text_Editor.log")
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(stream_handler)
+logger.addHandler(file_handler)
 
 
 def new_file():
